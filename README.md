@@ -97,6 +97,10 @@ B = 30: 10 cell battery. Probably BL36xx.
 
 Used as is by the BTC04 in various calculations, even though it's off by 0.2Ah for some batteries.
 
+#### Damage thing A (nybbles 48..49) and Overload (nybbles 50-51)
+Used in battery health calculation by the BTC04.
+
+If both are non-zero, it's a battery type 0.
 
 #### Checksums
 The checksums are calculated like this:
