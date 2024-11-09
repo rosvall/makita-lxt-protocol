@@ -170,7 +170,7 @@ For type5 and type6 batteries, BTC04 calculates overload percentage as follows:
 p = 5*x - 160
 ```
 
-##### Health calculation for type5
+##### Health calculation for type5 and type6
 For batteries of type 5 (F0513 based) or type6, BTC04 calculates *h*, its health rating on a scale from 0 to 4, from the above raw values for capacity, overdischarge, and overload:
 
 ```python
