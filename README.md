@@ -40,6 +40,19 @@ Every command is preceeded by a 1-wire reset sequence, to which the battery asse
 
 Commands that begin with `cc` can alternatively be preceeded by a rom id command  and read (send `33`, receive 8 bytes) instead of just sending `cc`.
 
+### Example waveform capture
+Here's an example of a 1-wire transaction with a BL1850B type 0 battery, using the setup with a USB TTL UART dongle described below. Captured with a Salaea Logic 16 and Sigrok/Pulseview.
+
+![Waveform capture of command cc d7 0e 02 with response](waveform-cc-d7-0e-02.png)
+
+The transactions begins with a 1-wire bus reset, where the dongle pulls the line low for 500us.
+
+The battery asserts presence by pulling the bus low from 550us to 650 us.
+
+The command sent from the dongle at 1600 us is `cc d7 0e 02` (read absolute temperature).
+
+The response returned from the battery at 5200 us is `9d 0b 06`.
+
 ## Getting started
 It's pretty easy to use a [cheap USB to TTL UART dongle](https://www.digikey.dk/en/products/detail/adafruit-industries-llc/954/7064488) to hack on the batteries with [uart1wire](https://github.com/rosvall/uart1wire).
 
@@ -58,10 +71,8 @@ BTC04 has a somewhat convoluted way of figuring out which battery type it's talk
  * [Battery type 5 (F0513 based)](type5.md)
  * [Battery type 6 (10 cell, likely BL36xx)](type6.md)
 
-There might also be a type 4, which is 
 
-
-## Examples of hacking with uart1wire
+## Examples with uart1wire
 
 ### Reading rom id and basic battery information
 ```sh
