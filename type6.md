@@ -2,14 +2,12 @@
 If byte 17 (counting from 0) of the response to `cc aa 00` equals 30 (decimal), the battery is type 6.
 
 ## Enter state to read out voltages
-### Commmand
-`cc 10 21`
+Command: `cc 10 21`
 ### Response (0 bytes)
 None
 
 ## Read cell voltages
-### Command
-`d4`
+Command: `d4`
 
 ### Response (20 bytes)
 | First byte | Last byte | Description |
@@ -29,8 +27,7 @@ Use the formula V = 6000 - x/10 to convert to millivolt.
 
 
 ## Temperature
-### Command
-`d2`
+Command: `d2`
 ### Response (1 byte)
 Temperature as single byte integer.
 

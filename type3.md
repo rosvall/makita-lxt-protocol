@@ -2,11 +2,9 @@
 If the battery fails the tests for type 0 and 2, but does respond correctly to `cc d4 2c 00 02`, it is type 3.
 
 ## Type 3 identifying command (unknown)
-### Command
-`cc d4 2c 00 02`
+Command: `cc d4 2c 00 02`
 
 ### Response
-
 | First byte | Last byte | Description |
 | ---------- | --------- | ----------- |
 |         0  |         1 | ?           |
@@ -15,8 +13,7 @@ If the battery fails the tests for type 0 and 2, but does respond correctly to `
 
 
 ## Overdischarge count
-### Command
-`cc d6 09 03 01`
+Command: `cc d6 09 03 01`
 ### Response (2 bytes)
 | Byte | Description |
 | ---- | ----------- |
@@ -25,8 +22,7 @@ If the battery fails the tests for type 0 and 2, but does respond correctly to `
 
 
 ## Health
-### Command
-`cc d6 38 02 02`
+Command: `cc d6 38 02 02`
 ### Response (3 bytes)
 | First byte | Last byte | Description |
 | ---------- | --------- | ----------- |
@@ -36,8 +32,7 @@ BTC04 divides this value by battery capacity.
 
 
 ## Overload counters
-### Command
-`cc d6 5b 03 04`
+Command: `cc d6 5b 03 04`
 ### Response (6 bytes)
 | Byte | Description     |
 | ---- | --------------- |
@@ -52,8 +47,7 @@ In the BTC04, the 3 counters are added together. They might count different type
 Counter C is stored separately though.
 
 ## Temperature *(same for type 0, 2 and 3)*
-### Command
-`cc d7 0e 00 02`
+Command: `cc d7 0e 00 02`
 ### Response (3 bytes)
 | First byte | Last byte | Description |
 | ---------- | --------- | ----------- |

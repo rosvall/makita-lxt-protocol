@@ -2,16 +2,15 @@
 If the value of byte 3 (counting from 0) of ROM id is less than 100, the battery is type 5.
 
 ## Read cell voltages
-### Commands
-`31` - Voltage for cell 1
+Command: `31` - Voltage for cell 1
 
-`32` - Voltage for cell 2
+Command: `32` - Voltage for cell 2
 
-`33` - Voltage for cell 3
+Command: `33` - Voltage for cell 3
 
-`34` - Voltage for cell 4
+Command: `34` - Voltage for cell 4
 
-`35` - Voltage for cell 5
+Command: `35` - Voltage for cell 5
 
 ### Response
 | First byte | Last byte | Description |
@@ -21,8 +20,7 @@ If the value of byte 3 (counting from 0) of ROM id is less than 100, the battery
 
 
 ## Temperature
-### Command
-`cc 52`
+Command: `cc 52`
 ### Response (2 bytes)
 | First byte | Last byte | Description |
 | ---------- | --------- | ----------- |
