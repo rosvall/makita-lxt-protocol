@@ -33,6 +33,19 @@ Every command is preceeded by a 1-wire reset sequence, to which the battery asse
 
 Commands that begin with `cc` can alternatively be preceeded by a rom id command  and read (send `33`, receive 8 bytes) instead of just sending `cc`.
 
+## Supported commands
+Different types of batteries support different sets of commands. Most newer batteries seem to be of type0, which has the biggest command set.
+
+BTC04 has a somewhat convoluted way of figuring out which battery type it's talking to.
+
+See
+
+ * [Battery type 0](type0.md)
+ * [Battery type 2](type2.md)
+ * [Battery type 3](type3.md)
+ * [Battery type 5](type5.md)
+ * [Battery type 6](type6.md)
+
 ## Battery statistics command
 Command: One of
  * `cc aa 00`
