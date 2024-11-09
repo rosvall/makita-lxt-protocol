@@ -81,14 +81,6 @@ B = 30: 10 cell battery. Probably BL36xx.
 Observed values in BL18xx batteries: 18 and 20.
 
 
-#### Flags (nybbles 34, 35)
-Probably flags.
-
-The battery is type 6 (a 10 cell non-xgt battery, likely BL36xx) if the value is 0x1e = 0b0001_1110.
-
-Observed values in BL18xx batteries: 0x0d and 0x0e.
-
-
 #### Capacity (nybbles 32, 33)
 8 bit integer.
 
@@ -102,6 +94,14 @@ Some observed values in BL18xx batteries:
  * BL1830B: 28 or 30
  * BL1840: 36 or 40
  * BL1850B: 50 or 52
+
+
+#### Flags (nybbles 34, 35)
+Probably flags.
+
+The battery is type 6 (a 10 cell non-xgt battery, likely BL36xx) if the value is 0x1e = 0b0001_1110.
+
+Observed values in BL18xx batteries: 0x0d and 0x0e.
 
 
 #### Damage rating (nybble 46, 3 MSB)
@@ -147,8 +147,16 @@ p = 5*x - 160
 ```
 
 
-##### Health calculation for type5 and type6
-For batteries of type 5 (F0513 based) or type6, BTC04 calculates *h*, its health rating on a scale from 0 to 4, from the above raw values for capacity, overdischarge, and overload:
+#### Cycle count (nybbles 52..55)
+13 bit integer.
+
+Number of charge-discharge cycles the battery has been through.
+
+
+#### Health calculation for type5 and type6
+For batteries of type 5 (F0513 based) or type6 (10 cell, likely BL36xx),
+BTC04 calculates *h*, its health rating on a scale from 0 to 4,
+from the above raw values for capacity, overdischarge, cycle count, and overload:
 
 ```python
 f_ol = max(overload - 29, 0)
