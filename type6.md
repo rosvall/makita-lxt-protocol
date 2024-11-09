@@ -1,4 +1,4 @@
-# Battery type 6 (BL36xx)
+# Battery type 6 (10 cell battery, likely BL36xx)
 If byte 17 (counting from 0) of the response to `cc aa 00` equals 30 (decimal), the battery is type 6.
 
 ## Enter state to read out voltages
@@ -23,7 +23,15 @@ Command: `d4`
 |        16  |        17 | Same for cell 9 |
 |        18  |        19 | Same for cell 10 |
 
-Use the formula V = 6000 - x/10 to convert to millivolt.
+Use the formula 
+
+```python
+v = 6000 - x/10
+```
+
+to convert to millivolt.
+
+BTC04 uses the minimum cell voltage to calculate battery pack charge percentage.
 
 
 ## Temperature
@@ -33,4 +41,6 @@ Temperature as single byte integer.
 
 Convert to degrees celcius with:
 
+```python
 t = (-40*x + 9323)/100
+```

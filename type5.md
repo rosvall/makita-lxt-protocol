@@ -13,8 +13,8 @@ Command: `34` - Voltage for cell 4
 Command: `35` - Voltage for cell 5
 
 ### Response
-| First byte | Last byte | Description |
-| ---------- | --------- | ----------- |
+| First byte | Last byte | Description                                      |
+| ---------- | --------- | ------------------------------------------------ |
 |         0  |         1 | Cell voltage in millivolt. Little endian integer |
 
 
@@ -22,6 +22,6 @@ Command: `35` - Voltage for cell 5
 ## Temperature
 Command: `cc 52`
 ### Response (2 bytes)
-| First byte | Last byte | Description |
-| ---------- | --------- | ----------- |
+| First byte | Last byte | Description                                     |
+| ---------- | --------- | ----------------------------------------------- |
 |         0  |         1 | Temperature in 1/10 K, as little endian integer |

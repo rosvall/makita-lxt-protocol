@@ -21,16 +21,6 @@ Command: `cc d6 09 03 01`
 |    1 | Always `06` |
 
 
-## Health
-Command: `cc d6 38 02 02`
-### Response (3 bytes)
-| First byte | Last byte | Description |
-| ---------- | --------- | ----------- |
-|         0  |         1 | "Health" as 16 bit little endian integer |
-|         2  |         2 | Always `06` |
-BTC04 divides this value by battery capacity.
-
-
 ## Overload counters
 Command: `cc d6 5b 03 04`
 ### Response (6 bytes)
@@ -45,6 +35,19 @@ Command: `cc d6 5b 03 04`
 
 In the BTC04, the 3 counters are added together. They might count different types of overload events.
 Counter C is stored separately though.
+
+Overload percentage is calculated the same way as for type0.
+
+
+## Health
+Command: `cc d6 38 02 02`
+### Response (3 bytes)
+| First byte | Last byte | Description                              |
+| ---------- | --------- | ---------------------------------------- |
+|         0  |         1 | "Health" as 16 bit little endian integer |
+|         2  |         2 | Always `06`                              |
+
+Health on a scale from 0 to 4 is calculated in the same way as for type0.
 
 ## Temperature *(same for type 0, 2 and 3)*
 Command: `cc d7 0e 00 02`

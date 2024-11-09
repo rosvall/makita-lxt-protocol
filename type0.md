@@ -45,16 +45,14 @@ Command: `cc d4 ba 00 01`
 |         0  |         0 | Integer count of overdischarge events |
 |         1  |         1 | Always `06`                           |
 
+BTC04 calculates overdischarge percentage *p* as:
+```python
+if overdischarge_count > 0 and cycle_count > 0:
+  p = 4 + 100 * overdischarge_count / cycle_count
+else:
+  p = 0
+```
 
-## Health
-Command: `cc d4 50 01 02`
-
-### Response (3 bytes)
-| First byte | Last byte | Description                            |
-| ---------- | --------- | -------------------------------------- |
-|         0  |         1 | Health as 16 bit little endian integer |
-|         2  |         2 | Always `06`                            |
-BTC04 divides this value by battery capacity.
 
 ## Overload counters
 Command: `cc d4 8d 00 07`
@@ -78,7 +76,35 @@ Command: `cc d4 8d 00 07`
 In the BTC04, the three counters are added together. They might count different types of overload events.
 Counter C is stored separately though.
 
+BTC04 calculates overload percentage *p* as:
 
+```python
+if sum(counters) > 0 and cycle_count > 0:
+  p = 4 + 100 * sum(counters) / cycle_count
+else:
+  p = 0
+```
+
+## Health
+Command: `cc d4 50 01 02`
+
+### Response (3 bytes)
+| First byte | Last byte | Description                            |
+| ---------- | --------- | -------------------------------------- |
+|         0  |         1 | Health as 16 bit little endian integer |
+|         2  |         2 | Always `06`                            |
+
+BTC04 calculates the health rating *h* on a scale from 0 to 4 as follows:
+
+```python
+ratio = health / capacity
+if ratio > 80:
+  h = 4
+else:
+  h = ratio / 10 - 5
+```
+
+where *health* is the 16 bit integer from the response, and *capacity* is that raw capacity value in units of 1/10Ah reported in the battery status response for command `cc aa 00`
 
 ## Temperature *(same for type 0, 2 and 3)*
 Command: `cc d7 0e 00 02`
@@ -100,4 +126,19 @@ Command: `cc d7 19 00 04`
 |         0  |         3 | Charge level as 32 bit little endian integer |
 |         4  |         4 | Always `06`                                  |
 
-The BTC04 divides this value by 2880 and then by battery capacity in Ah.
+BTC04 calculates battery pack state of charge *sof* on a scale of 0 to 7 as follows:
+
+```python
+ratio = charge_level / capacity / 2880
+
+if ratio == 0:
+  sof = 0
+elif ratio < 10:
+  sof = 1
+else:
+  sof = min(ratio / 10, 7)
+```
+
+where *charge_level* is the 16 bit integer from the response, and *capacity* is that raw capacity value in units of 1/10Ah reported in the battery status response for command `cc aa 00`
+
+
