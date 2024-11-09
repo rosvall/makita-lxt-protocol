@@ -33,7 +33,7 @@ Every command is preceeded by a 1-wire reset sequence, to which the battery asse
 
 Commands that begin with `cc` can alternatively be preceeded by a rom id command  and read (send `33`, receive 8 bytes) instead of just sending `cc`.
 
-## Battery message command
+## Battery statistics command
 Command: One of
  * `cc aa 00`
  * `33 [read 8 bytes of rom id] aa 00`
