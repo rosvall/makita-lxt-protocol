@@ -66,7 +66,6 @@ If the battery is put into *test mode*, some of the checksums will fail, and the
 The checksums of nybbles 44..47 and 48..61 are calculated and checked, but doesn't seem to factor into anything displayed on the BTC04.
 
 
-
 #### Battery type (nybbles 22..33)
 8 bit integer B:
 
@@ -107,11 +106,10 @@ Observed values in BL18xx batteries: 0x0d and 0x0e.
 #### Damage rating (nybble 46, 3 MSB)
 3 bit integer.
 
-Possibly only applicable for very old battery types.
+Possibly only applicable to very old battery types, i.e. not type 0, 2, 3, 5, or 6.
+For these batteries, the BTC04 will convert this value to the 0-4 health rating.
 
-For some batteries, the BTC04 will resort to convert this value to the 0-4 health rating.
-
-For those batteries, a damage rating below 3 corresponds to 4/4 health, 7 corresponds to 0/4 health, etc.
+A damage rating below 3 corresponds to 4/4 health, 7 corresponds to 0/4 health, etc.
 
 
 #### Overdischarge (nybbles 48, 49) 
@@ -122,8 +120,6 @@ For type5 and type6 batteries, BTC04 calculates overdischarge percentage *p* as 
 p = -5*x + 160
 ```
 
-Also used in battery health calculation by the BTC04.
-
 Must be non-zero for the battery to be of type 0.
 
 Some observed values in BL18xx batteries: 27, 30, 31, 32, 33
@@ -132,29 +128,30 @@ Some observed values in BL18xx batteries: 27, 30, 31, 32, 33
 #### Overload (nybbles 50, 51)
 8 bit integer.
 
-Probably only applicable for type5 or type6 batteries.
-
-Used in battery health calculation by the BTC04 for batteries NOT of types 0, 2 or 3.
-
-Must be non-zero for the battery to be of type 0.
-
-Some observed values in BL18xx batteries: 26, 30, 31, 32, 34
-
 For type5 and type6 batteries, BTC04 calculates overload percentage as follows:
+
 
 ```python
 p = 5*x - 160
 ```
 
+Must be non-zero for the battery to be of type 0.
+
+Some observed values in BL18xx batteries: 26, 30, 31, 32, 34
+
+
 
 #### Cycle count (nybbles 52..55)
 13 bit integer.
+
+Valid for all battery types.
 
 Number of charge-discharge cycles the battery has been through.
 
 
 #### Health calculation for type5 and type6
-For batteries of type 5 (F0513 based) or type6 (10 cell, likely BL36xx),
+For batteries of type 5 (F0513 based) or type 6 (10 cell, likely BL36xx).
+
 BTC04 calculates *h*, its health rating on a scale from 0 to 4,
 from the above raw values for capacity, overdischarge, cycle count, and overload:
 
