@@ -100,4 +100,4 @@ Command: `cc d7 19 00 04`
 |         0  |         3 | Charge level as 32 bit little endian integer |
 |         4  |         4 | Always `06`                                  |
 
-The BTC04 divides this value 2880 and then by battery capacity in Ah.
+The BTC04 divides this value by 2880 and then by battery capacity in Ah.
