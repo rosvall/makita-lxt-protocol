@@ -90,3 +90,21 @@ Command: `cc d7 0e 00 02`
 |         2  |         2 | Always `06` |
 
 
+
+
+## Voltages *(same for type 0, 2 and 3)*
+Command: `cc d7 00 00 0c`
+
+### Response (13 bytes)
+| First byte | Last byte | Description                                     |
+| ---------- | --------- | ----------------------------------------------- |
+|         0  |         1 | Pack voltage, as 16 bit little endian integer   |
+|         2  |         3 | Cell 1 voltage, as 16 bit little endian integer |
+|         4  |         5 | Cell 2 voltage, as 16 bit little endian integer |
+|         6  |         7 | Cell 3 voltage, as 16 bit little endian integer |
+|         8  |         9 | Cell 4 voltage, as 16 bit little endian integer |
+|        10  |        11 | Cell 5 voltage, as 16 bit little endian integer |
+|        12  |        12 | Always `06`                                     |
+
+All voltages are given in millivolt.
+

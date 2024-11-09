@@ -15,7 +15,6 @@ Proprietary 8 pin connector with 2.54 mm pitch. Both genders can be sourced from
 |  4  |                                                                                |
 |  5  |                                                                                |
 |  6  | Enable (active high)                                                           |
-|  5  |                                                                                |
 |  7  | *N/C*                                                                          |
 
 Pin 1 is closest to negative battery terminal.
@@ -35,8 +34,13 @@ Every command is preceeded by a 1-wire reset sequence, to which the battery asse
 
 Commands that begin with `cc` can alternatively be preceeded by a rom id command  and read (send `33`, receive 8 bytes) instead of just sending `cc`.
 
+## Getting started
+It's pretty easy to use a [cheap USB to TTL UART dongle](https://www.digikey.dk/en/products/detail/adafruit-industries-llc/954/7064488) to hack on the batteries with [uart1wire](https://github.com/rosvall/uart1wire).
+
+![Schematic](dongle-schem.png)
+
 ## Supported commands
-Different types of batteries support different sets of commands. Most newer batteries seem to be of type0, which has the biggest command set.
+Different types of batteries support different sets of commands. Most newer batteries seem to be of type 0, which has the biggest command set.
 
 BTC04 has a somewhat convoluted way of figuring out which battery type it's talking to.
 
@@ -201,3 +205,32 @@ If the battery is put into *test mode*, some of the checksums will fail, and the
 
 The checksums of nybbles 44..47 and 48..61 are calculated and checked, but doesn't seem to factor into anything displayed on the BTC04.
 
+
+## Examples of hacking with uart1wire
+
+### Reading rom id and battery statistics
+```sh
+% ./uart1wire.py /dev/ttyusb0 reset write 33 read 8 write f0 00 read 32
+14 0a 12 64 05 05 20 c6
+f1 36 b6 c3 18 58 00 00 94 94 40 21 01 80 02 09 43 d0 8e 1b f0 65 00 01 02 02 0e 60 00 40 01 d1
+```
+
+### Reading temperature from type 0 battery
+Command `cc d7 0e 00 02` responds with a 16 bit little endian integer representing absolute temperature in units of 1/10 K, followed by a byte `0x06`. 
+
+uart1wire supports parsing simple data structures using the standard [python `struct` format strings](https://docs.python.org/3/library/struct.html#format-strings). Instead of giving a length  of 3 bytes to read, we here use a struct format string to describe structure consisting of a little endian short followed by a byte.
+
+```sh
+% ./uart1wire.py /dev/ttyUSB0 reset write cc d7 0e 00 02 read '<Hb'
+2965 6
+```
+
+where 2965 corresponds to 296.5 K = 23.35 °C, and the final 6 means the command succeeded.
+
+### Read model string
+
+```sh
+% ./uart1wire.py /dev/ttyUSB0 reset write cc dc 0c read '16s'           
+b'BL1850B\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+```
+Here we use the struct format string `16s` to let uart1wire interpret the received data as a string of 16 bytes. The model name BL1850B followed by null-padding is printed.
