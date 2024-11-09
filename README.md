@@ -48,6 +48,8 @@ See
  * [Battery type 5](type5.md)
  * [Battery type 6](type6.md)
 
+As far as I know, all batteries support the below Battery Statistics Command as lowest common denominator.
+
 ## Battery statistics command
 Command: One of
  * `cc aa 00`
