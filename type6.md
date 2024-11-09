@@ -1,5 +1,5 @@
 # Battery type 6 (10 cell battery, likely BL36xx)
-If byte 17 (counting from 0) of the response to `cc aa 00` equals 30 (decimal), the battery is type 6.
+If byte 17 (counting from 0) of the response to the basic battery information command `cc aa 00` equals 30 (decimal), the battery is type 6.
 
 ## Enter state to read out voltages
 Command: `cc 10 21`

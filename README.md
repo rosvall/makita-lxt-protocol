@@ -1,6 +1,12 @@
 # Notes on how to communicate with Makita 18V batteries
 
-Makita LXT 18V batteries feature some sort of battery management system, that keeps track of cell voltage, temperature, state of charge, overload, undervoltage. The yellow connector 
+Makita LXT 18V batteries feature various types of battery management systems, that keeps track of cell voltage, temperature, state of charge, overload, undervoltage, which can be read out. This data can be read out through the yellow connector on the batteries.
+
+The [DC18RC](https://www.makitatools.com/products/details/DC18RC) fast charger uses this data connection to figure out the maximum allowed charging current.
+
+The [BTC04](https://www.youtube.com/watch?v=uumwieLu8CE) likewise uses this data connection to display various battery data.
+
+Most of the information here is the result of reverse enginering the BTC04. The rest is from [Martin Jansson's Open Battery Information project](https://github.com/mnh-jansson/open-battery-information).
 
 ## Electrical connection
 
@@ -45,18 +51,19 @@ Different types of batteries support different sets of commands. Most newer batt
 BTC04 has a somewhat convoluted way of figuring out which battery type it's talking to.
 
  * [Basic battery info command `cc aa 00`](basic_info_cmd.md)
-   I believe all batteries support this command, which returns a bunch of information about type and state.
- * [Battery type 0](type0.md)
+   I believe all batteries support this command, which returns a bunch of information about type and state. Both that DC18RC charger and BTC04 begins by issuing this command and parsing the results.
+ * [Battery type 0 (newest type, probably)](type0.md)
  * [Battery type 2](type2.md)
  * [Battery type 3](type3.md)
- * [Battery type 5](type5.md)
- * [Battery type 6](type6.md)
+ * [Battery type 5 (F0513 based)](type5.md)
+ * [Battery type 6 (10 cell, likely BL36xx)](type6.md)
 
+There might also be a type 4, which is 
 
 
 ## Examples of hacking with uart1wire
 
-### Reading rom id and battery statistics
+### Reading rom id and basic battery information
 ```sh
 % ./uart1wire.py /dev/ttyusb0 reset write 33 read 8 write f0 00 read 32
 14 0a 12 64 05 05 20 c6

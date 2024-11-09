@@ -104,7 +104,7 @@ else:
   h = ratio / 10 - 5
 ```
 
-where *health* is the 16 bit integer from the response, and *capacity* is that raw capacity value in units of 1/10Ah reported in the battery status response for command `cc aa 00`
+where *health* is the 16 bit integer from the response, and *capacity* is that raw capacity value in units of 1/10Ah reported in the reponse to the basic battery information command `cc aa 00`
 
 ## Temperature *(same for type 0, 2 and 3)*
 Command: `cc d7 0e 00 02`
@@ -139,7 +139,7 @@ else:
   sof = min(ratio / 10, 7)
 ```
 
-where *charge_level* is the 16 bit integer from the response, and *capacity* is that raw capacity value in units of 1/10Ah reported in the battery status response for command `cc aa 00`
+where *charge_level* is the 16 bit integer from the response, and *capacity* is that raw capacity value in units of 1/10Ah reported in the response to the basic battery information command `cc aa 00`
 
 
 ## Voltages *(same for type 0, 2 and 3)*
