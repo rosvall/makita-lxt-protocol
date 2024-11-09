@@ -26,6 +26,8 @@ Pin 6 must be pulled high (3.3V will do) before and during communication on pin 
 
 External pull-up on the 1-wire bus on pin 2 must be provided. A 4.7 kiloohm resistor to 3.3V seems to work. Pull-up to 5V should also work.
 
+See also [Martin Jansson's Open Battery Information project](https://github.com/mnh-jansson/open-battery-information) and [this simple hack to use a USB to UART dongle for 1-wire communication](https://github.com/rosvall/uart1wire).
+
 ## 1-wire protocol
 Standard 1-wire timing seems to work well enough.
 
